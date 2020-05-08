@@ -1,5 +1,6 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Exception.EstListeVide;
 import Exception.NomVide;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -14,8 +15,9 @@ public class FormeTest extends TestCase {
      *
      * @param testName name of the test case
      * @throws NomVide 
+     * @throws EstListeVide 
      */
-    public FormeTest( ) throws NomVide{
+    public FormeTest( ) throws NomVide, EstListeVide{
         Forme f1 = new Cercle("c1", new Point(5, 5), 5);
         Forme f2 = new Rectangle("r1", new Point(2, 1), 5, 10);
         Forme f3 = new Carre("car1", new Point(4, 2), 6);

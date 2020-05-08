@@ -1,8 +1,10 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Exception.EstListeVide;
+
 public abstract class Forme{
 	public String nom;
-	public abstract void afficher();
-	public abstract void deplacer(int x, int y);
+	public abstract void afficher() throws EstListeVide;
+	public abstract void deplacer(int x, int y) throws EstListeVide;
 
 }
