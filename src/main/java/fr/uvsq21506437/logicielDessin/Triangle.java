@@ -1,11 +1,14 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Exception.NomVide;
+
 public class Triangle extends Forme{
 	private Point p1;
 	private Point p2;
 	private Point p3;
 	
-	public Triangle(String nom, Point p1, Point p2, Point p3) {
+	public Triangle(String nom, Point p1, Point p2, Point p3)  throws NomVide{
+		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
 		this.p1 = p1;
 		this.p2 = p2;

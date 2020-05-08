@@ -1,10 +1,13 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Exception.NomVide;
+
 public class Carre extends Forme{
 	private Point Hg;
 	private final double cote;
 	
-	public Carre(String nom, Point Hg, double cote) {
+	public Carre(String nom, Point Hg, double cote) throws NomVide{
+		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
 		this.Hg = Hg;
 		this.cote = cote;

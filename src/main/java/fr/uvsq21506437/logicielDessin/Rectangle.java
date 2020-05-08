@@ -1,11 +1,14 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Exception.NomVide;
+
 public class Rectangle extends Forme{
 	private Point Hg;
 	private final double largeur;
 	private final double longeur;
 	
-	public Rectangle(String nom, Point Hg, double longeur, double largeur) {
+	public Rectangle(String nom, Point Hg, double longeur, double largeur)  throws NomVide{
+		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
 		this.Hg = Hg;
 		this.largeur = largeur;

@@ -1,10 +1,13 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Exception.NomVide;
+
 public class Cercle extends Forme{
 	private Point centre;
 	private final double rayon;
 	
-	public Cercle(String nom, Point centre, double rayon) {
+	public Cercle(String nom, Point centre, double rayon) throws NomVide{
+		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
 		this.centre = centre;
 		this.rayon = rayon;
