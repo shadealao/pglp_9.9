@@ -24,7 +24,7 @@ public class GroupeForme extends Forme{
 	public void deplacer(int x, int y) throws EstListeVide {
 		if(this.formes.size() == 0) throw new EstListeVide("groupe de formes");
 		for (Forme forme : this.formes) {
-			forme.deplacer(x, y);;
+			forme.deplacer(x, y);
 		}
 		
 	}

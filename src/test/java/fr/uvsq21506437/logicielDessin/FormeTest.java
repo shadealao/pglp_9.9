@@ -17,7 +17,7 @@ public class FormeTest extends TestCase {
      * @throws NomVide 
      * @throws EstListeVide 
      */
-    public FormeTest( ) throws NomVide, EstListeVide{
+    public void testForme() throws NomVide, EstListeVide{
         Forme f1 = new Cercle("c1", new Point(5, 5), 5);
         Forme f2 = new Rectangle("r1", new Point(2, 1), 5, 10);
         Forme f3 = new Carre("car1", new Point(4, 2), 6);
@@ -32,17 +32,20 @@ public class FormeTest extends TestCase {
         f2.afficher();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite( FormeTest.class );
-    }
-
+   
     /**
      * Rigourous Test :-)
+     * @throws NomVide 
      */
-    public void testApp() {
-        assertTrue( true );
+    public void testNomvide() {
+    	Forme f1 ;
+    	Throwable t = null;
+    	try {
+    		f1 = new Cercle("", new Point(5, 5), 5);
+    	} catch (NomVide e) {
+    		t = e.fillInStackTrace();
+    	}
+    	assertNotNull(t);
+    	assertSame(NomVide.class, t.getClass());
     }
 }
