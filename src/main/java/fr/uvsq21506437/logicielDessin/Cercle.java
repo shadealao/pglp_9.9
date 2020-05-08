@@ -19,9 +19,9 @@ public class Cercle extends Forme{
 	}
 
 	@Override
-	public void deplacer(Point p) {
-		this.centre.setX(this.centre.getX()+p.getX());
-		this.centre.setY(this.centre.getY()+p.getY());
+	public void deplacer(int x, int y) {
+		this.centre.setX(this.centre.getX()+ x);
+		this.centre.setY(this.centre.getY()+ y);
 	}
 
 }

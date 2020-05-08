@@ -19,8 +19,8 @@ public class Carre extends Forme{
 	}
 
 	@Override
-	public void deplacer(Point p) {
-		this.Hg.setX(this.Hg.getX()+p.getX());
-		this.Hg.setY(this.Hg.getY()+p.getY());
+	public void deplacer(int x, int y) {
+		this.Hg.setX(this.Hg.getX()+ x);
+		this.Hg.setY(this.Hg.getY()+ y);
 	}
 }

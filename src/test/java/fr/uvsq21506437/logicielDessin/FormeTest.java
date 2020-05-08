@@ -22,11 +22,11 @@ public class FormeTest extends TestCase {
         Forme f4 = new Triangle("tri1", new Point(4, 2), new Point(6, 3), new Point(5, 4));
         
         f1.afficher();
-        f1.deplacer(new Point(1,1));
+        f1.deplacer(1,1);
         f1.afficher();
         
         f2.afficher();
-        f2.deplacer(new Point(1,1));
+        f2.deplacer(1,1);
         f2.afficher();
     }
 

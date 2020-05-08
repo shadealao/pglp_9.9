@@ -21,15 +21,15 @@ public class Triangle extends Forme{
 	}
 
 	@Override
-	public void deplacer(Point p) {
-		this.p1.setX(this.p1.getX()+p.getX());
-		this.p1.setY(this.p1.getY()+p.getY());
+	public void deplacer(int x, int y) {
+		this.p1.setX(this.p1.getX()+ x);
+		this.p1.setY(this.p1.getY()+ y);
 		
-		this.p2.setX(this.p2.getX()+p.getX());
-		this.p2.setY(this.p2.getY()+p.getY());
+		this.p2.setX(this.p2.getX()+ x);
+		this.p2.setY(this.p2.getY()+ y);
 		
-		this.p3.setX(this.p3.getX()+p.getX());
-		this.p3.setY(this.p3.getY()+p.getY());
+		this.p3.setX(this.p3.getX()+ x);
+		this.p3.setY(this.p3.getY()+ y);
 		
 	}
 }
