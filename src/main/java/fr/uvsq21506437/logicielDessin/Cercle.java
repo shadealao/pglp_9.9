@@ -6,11 +6,16 @@ public class Cercle extends Forme{
 	private Point centre;
 	private final double rayon;
 	
+	
 	public Cercle(String nom, Point centre, double rayon) throws NomVide{
 		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
 		this.centre = centre;
 		this.rayon = rayon;
+	}
+	
+	public Cercle() {
+		this.rayon = 0.0;
 	}
 
 	@Override
@@ -22,6 +27,13 @@ public class Cercle extends Forme{
 	public void deplacer(int x, int y) {
 		this.centre.setX(this.centre.getX()+ x);
 		this.centre.setY(this.centre.getY()+ y);
+	}
+	
+	public Point getPoint() {
+		return this.centre;
+	}
+	public double getCentre() {
+		return this.rayon;
 	}
 
 }

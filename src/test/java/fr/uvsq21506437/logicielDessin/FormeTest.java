@@ -2,20 +2,16 @@ package fr.uvsq21506437.logicielDessin;
 
 import Exception.EstListeVide;
 import Exception.NomVide;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Je teste les relations d'héritage entre forme et les autres forme (cercle tri etc.).
  */
 public class FormeTest extends TestCase {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     * @throws NomVide 
-     * @throws EstListeVide 
+	/**
+     * 
+     * @throws NomVide regarde si le nom de la forme a bien été noté
+     * @throws EstListeVide regarde si la liste est vide
      */
     public void testForme() throws NomVide, EstListeVide{
         Forme f1 = new Cercle("c1", new Point(5, 5), 5);
@@ -32,11 +28,9 @@ public class FormeTest extends TestCase {
         f2.afficher();
     }
 
-   
-    /**
-     * Rigourous Test :-)
-     * @throws NomVide 
-     */
+   /**
+    * 
+    */
     public void testNomvide() {
     	Forme f1 ;
     	Throwable t = null;

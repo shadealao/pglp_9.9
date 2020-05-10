@@ -3,20 +3,16 @@ package fr.uvsq21506437.logicielDessin;
 import Exception.EstListeVide;
 import Exception.NomVide;
 import composite.GroupeForme;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Unit test for simple App.
  */
 public class GroupeFormeTest extends TestCase {
     /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     * @throws NomVide 
-     * @throws EstListeVide 
+     * 
+     * @throws NomVide regarde si le nom de la forme a bien été noté
+     * @throws EstListeVide regarde si la liste est vide
      */
     public void testGroupeForme() throws NomVide, EstListeVide {
     	Forme f1 = new Cercle("c1", new Point(5, 5), 5);
@@ -44,16 +40,10 @@ public class GroupeFormeTest extends TestCase {
         grp2.afficher();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite( GroupeFormeTest.class );
-    }
+    
 
     /**
-     * Rigourous Test :-)
-     * @throws EstListeVide 
+     * 
      */
     public void testEstListeVide(){
     	GroupeForme grp1;
