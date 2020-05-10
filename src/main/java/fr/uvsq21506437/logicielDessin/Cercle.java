@@ -32,7 +32,7 @@ public class Cercle extends Forme{
 	public Point getPoint() {
 		return this.centre;
 	}
-	public double getCentre() {
+	public double getRayon() {
 		return this.rayon;
 	}
 

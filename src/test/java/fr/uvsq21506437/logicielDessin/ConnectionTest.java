@@ -19,8 +19,15 @@ public class ConnectionTest extends TestCase {
 	public void testApp() throws SQLException {
 		BDD db = new BDD();
 		db.connection();
-		db.creationTableCercle();
-//		db.AfficheTable();
+//		db.creationTableCercle();
+//		db.creationTableCarre();
+//		db.creationTableRectangle();
+//		db.creationTableTriangle();
+		
+		db.AfficheTable("Cercle");
+		db.AfficheTable("Carre");
+		db.AfficheTable("Rectangle");
+		db.AfficheTable("Triangle");
 		//db.creationclass();
 	}
 }

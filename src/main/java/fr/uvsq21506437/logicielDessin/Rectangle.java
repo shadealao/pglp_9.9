@@ -26,4 +26,15 @@ public class Rectangle extends Forme{
 		this.Hg.setY(this.Hg.getY()+ y);
 		
 	}
+	public Point getPoint() {
+		return this.Hg;
+	}
+	
+	public double getLargeur() {
+		return this.largeur;
+	}
+	
+	public double getLongeur() {
+		return this.longeur;
+	}
 }

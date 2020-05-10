@@ -32,4 +32,16 @@ public class Triangle extends Forme{
 		this.p3.setY(this.p3.getY()+ y);
 		
 	}
+	
+	public Point getPoint1() {
+		return this.p1;
+	}
+	
+	public Point getPoint2() {
+		return this.p2;
+	}
+	
+	public Point getPoint3() {
+		return this.p3;
+	}
 }

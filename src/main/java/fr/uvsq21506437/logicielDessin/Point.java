@@ -18,7 +18,7 @@ public class Point {
 	}
 	
 	public int getX() {
-		return this.x;
+		return this.x; 
 	}
 	
 	public int getY() {

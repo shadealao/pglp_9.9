@@ -23,4 +23,11 @@ public class Carre extends Forme{
 		this.Hg.setX(this.Hg.getX()+ x);
 		this.Hg.setY(this.Hg.getY()+ y);
 	}
+	
+	public Point getPoint() {
+		return this.Hg;
+	}
+	public double getCote() {
+		return this.cote;
+	}
 }
