@@ -20,8 +20,8 @@ public class GroupeFormeTest extends TestCase {
         Forme f3 = new Carre("car1", new Point(8, 2), 6);
         Forme f4 = new Triangle("tri1", new Point(4, 2), new Point(6, 3), new Point(5, 4));
         
-        GroupeForme grp1 = new GroupeForme();
-        GroupeForme grp2 = new GroupeForme();
+        GroupeForme grp1 = new GroupeForme("grp1");
+        GroupeForme grp2 = new GroupeForme("grp2");
         
         grp1.add(f1);
         grp1.add(f2);
@@ -49,7 +49,7 @@ public class GroupeFormeTest extends TestCase {
     	GroupeForme grp1;
     	Throwable t = null;
     	try {
-    		grp1 = new GroupeForme();
+    		grp1 = new GroupeForme("grp1");
     		grp1.afficher();
     	} catch (EstListeVide e) {
     		t = e.fillInStackTrace();

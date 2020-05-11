@@ -61,8 +61,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 			prepare.setDouble(3, obj.getLongeur());
 			prepare.setDouble(4, obj.getLargeur());
 			prepare.setString(5, obj.getNom());
-			
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

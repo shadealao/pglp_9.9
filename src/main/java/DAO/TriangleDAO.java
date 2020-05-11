@@ -67,8 +67,7 @@ public class TriangleDAO extends DAO<Triangle>{
 			prepare.setInt(5, obj.getPoint3().getX());
 			prepare.setInt(6, obj.getPoint3().getY());
 			prepare.setString(7, obj.getNom());
-			
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

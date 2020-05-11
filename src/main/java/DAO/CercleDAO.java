@@ -33,21 +33,15 @@ public class CercleDAO extends DAO<Cercle>{
 
 	@Override
 	public Cercle read(String nom) {
-		int x = 0;
-		int y = 0;
-		double rayon = 0.0;
 		Cercle obj = null;
 		try {
 			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Cercle WHERE nom = ? ");
 			prepare.setString(1, nom);
 			ResultSet result = prepare.executeQuery();
 			while (result.next()) {
-				nom = result.getString("nom");
-				x = result.getInt("centrex");
-				y = result.getInt("centrey");
-				rayon = result.getDouble("rayon");
+				obj = new Cercle(result.getString("nom"), new Point(result.getInt("centrex"), result.getInt("centrey")), result.getDouble("rayon"));
 			}
-			obj = new Cercle(nom, new Point(x, y), rayon);
+			
 		} catch (SQLException | NomVide e) {
 			e.printStackTrace();
 		}
@@ -65,8 +59,7 @@ public class CercleDAO extends DAO<Cercle>{
 			prepare.setInt(2, obj.getPoint().getY());
 			prepare.setDouble(3, obj.getRayon());
 			prepare.setString(4, obj.getNom());
-			
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -6,10 +6,10 @@ import Exception.EstListeVide;
 import fr.uvsq21506437.logicielDessin.Forme;
 
 public class GroupeForme extends Forme{
-	ArrayList<Forme> formes = new ArrayList<Forme>();
-	
-	public GroupeForme() {
-		
+	protected ArrayList<Forme> formes;
+	public GroupeForme(String nom) {
+		this.nom = nom;
+		formes = new ArrayList<Forme>();
 	}
 
 	@Override
@@ -36,5 +36,16 @@ public class GroupeForme extends Forme{
 	public void remove(Forme f) {
 		this.formes.remove(f);
 	}
+	
+	/*public String getNom() {
+		return this.nom;
+	}*/
 
+	public ArrayList<Forme> getList() {
+		return formes;
+	}
+	
+	public void setList(ArrayList<Forme> f) {
+		this.formes = f;
+	}
 }

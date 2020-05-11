@@ -19,6 +19,7 @@ public class FormeTest extends TestCase {
         Forme f3 = new Carre("car1", new Point(4, 2), 6);
         Forme f4 = new Triangle("tri1", new Point(4, 2), new Point(6, 3), new Point(5, 4));
         
+        //System.out.println("forme  : "+ f3.getClass().getSimpleName());
         f1.afficher();
         f1.deplacer(1,1);
         f1.afficher();

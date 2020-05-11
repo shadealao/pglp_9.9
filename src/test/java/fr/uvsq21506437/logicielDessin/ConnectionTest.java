@@ -19,15 +19,30 @@ public class ConnectionTest extends TestCase {
 	public void testApp() throws SQLException {
 		BDD db = new BDD();
 		db.connection();
-//		db.creationTableCercle();
-//		db.creationTableCarre();
-//		db.creationTableRectangle();
-//		db.creationTableTriangle();
+		
+		db.DropTable("GroupeForme");
+		db.DropTable("Carre");
+		db.DropTable("Rectangle");
+		db.DropTable("Triangle");
+		db.DropTable("Cercle");
+		
+		
+		db.creationTableCercle();
+		db.creationTableCarre();
+		db.creationTableRectangle();
+		db.creationTableTriangle();
+		db.creationTableGroupeForme();
 		
 		db.AfficheTable("Cercle");
 		db.AfficheTable("Carre");
 		db.AfficheTable("Rectangle");
 		db.AfficheTable("Triangle");
+		db.AfficheTable("GroupeForme");
+		
+		/*db.DropTable("GroupeForme");
+		db.creationTableGroupeForme();
+		db.AfficheTable("GroupeForme");
+		*/
 		//db.creationclass();
 	}
 }

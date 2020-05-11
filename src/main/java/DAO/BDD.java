@@ -92,22 +92,19 @@ public class BDD {
 		}
 	}
 	
-	/*public void creationTableGroupeForme() throws SQLException {
+	public void creationTableGroupeForme() throws SQLException {
 		try (Statement stmt = this.con.createStatement()) {
 			stmt.executeUpdate("CREATE TABLE GroupeForme ("
-					+ "nom VARCHAR(100) PRIMARY KEY NOT NULL,"
-					+ "p1x Int,"
-					+ "p1y Int,"
-					+ "p2x Int,"
-					+ "p2y Int,"
-					+ "p3x Int,"
-					+ "p3y Int"
+					+ "nom VARCHAR(100) NOT NULL,"
+					+ "typeobjet VARCHAR(100) NOT NULL,"
+					+ "nomobjet VARCHAR(100) NOT NULL,"
+					+ "PRIMARY KEY(nom, typeobjet, nomobjet)"
 					+ ")");
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	*/
+	
 	
 	public void AfficheTable(String table) throws SQLException {
 		String r = "";
@@ -124,6 +121,17 @@ public class BDD {
 				 r+="\n";
 			}
 			System.out.println(r);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void DropTable(String table) {
+		PreparedStatement prepare;
+		try {
+			prepare = con.prepareStatement("DROP TABLE "+table);
+			prepare.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
