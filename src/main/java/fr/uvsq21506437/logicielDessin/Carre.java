@@ -1,8 +1,9 @@
 package fr.uvsq21506437.logicielDessin;
 
+import Command.Command;
 import Exception.NomVide;
 
-public class Carre extends Forme{
+public class Carre extends Forme implements Command{
 	private Point Hg;
 	private final double cote;
 	
@@ -29,5 +30,11 @@ public class Carre extends Forme{
 	}
 	public double getCote() {
 		return this.cote;
+	}
+
+	@Override
+	public void execute() {
+		// TODO Auto-generated method stub
+		
 	}
 }

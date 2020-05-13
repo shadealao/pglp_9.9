@@ -7,7 +7,7 @@ import Exception.NomVide;
 import fr.uvsq21506437.logicielDessin.Cercle;
 import fr.uvsq21506437.logicielDessin.Point;
 
-public class CercleDAO extends DAO<Cercle>{
+public class CercleDAO extends DAO<Cercle> {
 
 	public CercleDAO() throws SQLException {
 		super();
