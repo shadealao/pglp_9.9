@@ -3,6 +3,7 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Exception.NomVide;
 import fr.uvsq21506437.logicielDessin.Point;
@@ -12,6 +13,22 @@ public class RectangleDAO extends DAO<Rectangle>{
 
 	public RectangleDAO() throws SQLException {
 		super();
+	}
+	
+	@Override
+	public ArrayList<Rectangle> init() {
+		ArrayList<Rectangle> rectangle = new ArrayList<Rectangle>();
+			try {
+				
+				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Rectangle ");
+				ResultSet result = prepare.executeQuery();
+				while (result.next()) {
+				rectangle.add(new Rectangle(result.getString("nom"), new Point(result.getInt("HGx"), result.getInt("HGy")), result.getDouble("largeur"), result.getDouble("longeur")));
+				}
+			} catch (NomVide | SQLException e) {
+				e.printStackTrace();
+			}
+		return rectangle;
 	}
 
 	@Override
@@ -74,7 +91,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 		try {
 			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Rectangle WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 			obj = null;
 		} catch (SQLException e) {
 			e.printStackTrace();

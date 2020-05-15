@@ -3,8 +3,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import Exception.NomVide;
+import java.util.ArrayList;
 
 public abstract class DAO <T>{
 	String dburl = "jdbc:derby:test;create=true";
@@ -19,4 +18,5 @@ public abstract class DAO <T>{
 	public abstract T read(String nom);
 	public abstract T update(T obj);
 	public abstract void delete(T obj);
+	public abstract ArrayList<?> init();
 }

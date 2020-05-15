@@ -3,17 +3,32 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Exception.NomVide;
-import fr.uvsq21506437.logicielDessin.Carre;
 import fr.uvsq21506437.logicielDessin.Point;
-import fr.uvsq21506437.logicielDessin.Rectangle;
 import fr.uvsq21506437.logicielDessin.Triangle;
 
 public class TriangleDAO extends DAO<Triangle>{
 
 	public TriangleDAO() throws SQLException {
 		super();
+	}
+	
+	@Override
+	public ArrayList<Triangle> init() {
+		ArrayList<Triangle> triangle = new ArrayList<Triangle>();
+			try {
+				
+				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Triangle ");
+				ResultSet result = prepare.executeQuery();
+				while (result.next()) {
+				triangle.add(new Triangle(result.getString("nom"), new Point(result.getInt("p1x"), result.getInt("p1y")),  new Point(result.getInt("p2x"), result.getInt("p2y")),  new Point(result.getInt("p3x"), result.getInt("p3y"))));
+				}
+			} catch (NomVide | SQLException e) {
+				e.printStackTrace();
+			}
+		return triangle;
 	}
 
 	@Override
@@ -80,7 +95,7 @@ public class TriangleDAO extends DAO<Triangle>{
 		try {
 			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Triangle WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 			obj = null;
 		} catch (SQLException e) {
 			e.printStackTrace();

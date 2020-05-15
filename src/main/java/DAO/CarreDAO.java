@@ -3,11 +3,11 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Exception.NomVide;
 import fr.uvsq21506437.logicielDessin.Carre;
 import fr.uvsq21506437.logicielDessin.Point;
-import fr.uvsq21506437.logicielDessin.Rectangle;
 
 public class CarreDAO extends DAO<Carre>{
 
@@ -15,6 +15,22 @@ public class CarreDAO extends DAO<Carre>{
 		super();
 	}
 
+	@Override
+	public ArrayList<Carre> init() {
+		ArrayList<Carre> carre = new ArrayList<Carre>();
+			try {
+				
+				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Carre ");
+				ResultSet result = prepare.executeQuery();
+				while (result.next()) {
+				carre.add(new Carre(result.getString("nom"), new Point(result.getInt("HGx"), result.getInt("HGy")), result.getDouble("cote")));
+				}
+			} catch (NomVide | SQLException e) {
+				e.printStackTrace();
+			}
+		return carre;
+	}
+	
 	@Override
 	public Carre create(Carre obj)  {
 		try {
@@ -61,7 +77,7 @@ public class CarreDAO extends DAO<Carre>{
 			prepare.setDouble(3, obj.getCote());
 			prepare.setString(4, obj.getNom());
 			
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -74,7 +90,7 @@ public class CarreDAO extends DAO<Carre>{
 		try {
 			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Carre WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 			obj = null;
 		} catch (SQLException e) {
 			e.printStackTrace();

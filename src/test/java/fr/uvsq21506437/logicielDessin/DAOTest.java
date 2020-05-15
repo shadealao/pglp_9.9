@@ -124,6 +124,8 @@ public class DAOTest extends TestCase{
         Rectangle f2 = new Rectangle("r1", new Point(2, 1), 5, 10);
         Carre f3 = new Carre("car1", new Point(8, 2), 6);
         Triangle f4 = new Triangle("tri1", new Point(4, 2), new Point(6, 3), new Point(5, 4));
+//        grp1.remove(f1);
+//		grp1 = c1.update(grp1);
 		
         grp1.add(f1);
         grp1.add(f2);

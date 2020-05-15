@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import Exception.EstListeVide;
 import Exception.NomVide;
 import composite.GroupeForme;
 import fr.uvsq21506437.logicielDessin.Carre;
@@ -19,6 +18,48 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 
 	public GroupeFormeDAO() throws SQLException {
 		super();
+	}
+	
+	@Override
+	public ArrayList<Forme> init() {
+		ArrayList<Forme> GForme = new ArrayList<Forme>();
+		try {
+			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM GroupeForme ");
+			ResultSet result = prepare.executeQuery();
+			//obj = new GroupeForme(nom);
+			//ArrayList<Forme> formes;
+			while (result.next()) {
+
+				try {
+
+					PreparedStatement prep = connect.prepareStatement("SELECT * FROM "+ result.getString("typeobjet") +" WHERE nom = '"+ result.getString("nomobjet")+"'");
+					ResultSet res = prep.executeQuery();
+					while (res.next()) {
+						if(result.getString("typeobjet").equals("Carre")) {
+							GForme.add( new Carre(res.getString("nom"), new Point(res.getInt("HGx"), res.getInt("HGy")), res.getDouble("cote")));
+
+						}
+						else if(result.getString("typeobjet").equals("Cercle")) {
+							GForme.add( new Cercle(res.getString("nom"), new Point(res.getInt("centrex"), res.getInt("centrey")), res.getDouble("rayon")));
+
+						}
+						else if(result.getString("typeobjet").equals("Rectangle")) {
+							GForme.add( new Rectangle(res.getString("nom"), new Point(res.getInt("HGx"), res.getInt("HGy")), res.getDouble("largeur"), res.getDouble("longeur")));
+
+						}
+						else if(result.getString("typeobjet").equals("Triangle")) {
+							GForme.add( new Triangle(res.getString("nom"), new Point(res.getInt("p1x"), res.getInt("p1y")),  new Point(res.getInt("p2x"), res.getInt("p2y")),  new Point(res.getInt("p3x"), res.getInt("p3y"))));
+						}
+					}
+				}catch (SQLException | NomVide e) {
+					e.printStackTrace();
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return GForme;
 	}
 
 	@Override
@@ -91,7 +132,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 
 			ArrayList<Forme> formes = obj.getList();
 			for (Forme forme : formes) {
-				String table = forme.getClass().getSimpleName().toString();
+				String table = forme.getClass().getSimpleName();
 				if(table.equalsIgnoreCase("Carre")) {
 					PreparedStatement prep = connect.prepareStatement("UPDATE Carre"
 							+ " SET HGx = ? , HGy = ? , cote = ?"

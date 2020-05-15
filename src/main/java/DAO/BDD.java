@@ -32,7 +32,9 @@ public class BDD {
 			creationTableCercle(con);
 		}
 		*/
-		con = DriverManager.getConnection(dburl,"myLogin","myPassword");
+		con = DriverManager.getConnection(dburl,
+				"myLogin",
+				"myPassword");
 
 	}
 

@@ -13,7 +13,8 @@ public class FormeTest extends TestCase {
      * @throws NomVide regarde si le nom de la forme a bien été noté
      * @throws EstListeVide regarde si la liste est vide
      */
-    public void testForme() throws NomVide, EstListeVide{
+    @SuppressWarnings("unused")
+	public void testForme() throws NomVide, EstListeVide{
         Forme f1 = new Cercle("c1", new Point(5, 5), 5);
         Forme f2 = new Rectangle("r1", new Point(2, 1), 5, 10);
         Forme f3 = new Carre("car1", new Point(4, 2), 6);

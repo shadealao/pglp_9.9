@@ -1,7 +1,15 @@
 package Command;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import DAO.CarreDAO;
+import DAO.CercleDAO;
+import DAO.RectangleDAO;
+import DAO.TriangleDAO;
+import DAO.GroupeFormeDAO;
+import fr.uvsq21506437.logicielDessin.Forme;
 
 
 public class DrawingTUI {
@@ -10,22 +18,87 @@ public class DrawingTUI {
 	private String chaine; //chaine entrée
 	protected String parametre = "";
 	protected Action action;
+
 	public DrawingTUI() {
+		Regles();
+		
 		sc = new Scanner(System.in);
 		chaine = "";
 		mySwitch = new Switch();
 		this.action = new Action("");
+		initForme();
 		afficherDessin();
+	}
+
+	public void Regles() {
+		String s = "Les règles :\n"
+				+ "créer : car1 = carre((0, 2), 50)\n"
+				+ "déplacer : move(car1, (10, 20))\n"
+				+ "afficher : show(car1)\n"
+				+ "ajouter une forme dans un groupe : groupe(grp1,car1)\n"
+				+ "effacer : delete(car1)\n"
+				+ "effacer un membre d'un groupe: deletegroupe(grp1, car1)\n"
+				+ "arrêter l'application : quit";
+		System.out.println(s);
+								
+	}
+	
+	public void initForme() {
+		//carre
+		CarreDAO CDAO = null;
+		ArrayList<?> f = null;
+		try {
+			CDAO = new CarreDAO();
+			f = CDAO.init();
+			for (Object d : f) action.dessin.add((Forme) d);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		//cercle
+		f = null;
+		try {
+			CercleDAO CeDAO = new CercleDAO();
+			f = CeDAO.init();
+			for (Object d : f) action.dessin.add((Forme) d);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		//rectangle
+		f = null;
+		try {
+			RectangleDAO RDAO = new RectangleDAO();
+			f = RDAO.init();
+			for (Object d : f) action.dessin.add((Forme) d);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		//triangle
+		f = null;
+		try {
+			TriangleDAO TDAO = new TriangleDAO();
+			f = TDAO.init();
+			for (Object d : f) action.dessin.add((Forme) d);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		//GForme
+		f = null;
+		try {
+			GroupeFormeDAO GfDAO = new GroupeFormeDAO();
+			f = GfDAO.init();
+			for (Object d : f) action.dessin.add((Forme) d);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void nextCommand() {
 		chaine = sc.nextLine().toString();
-		//chaine = "car1 = carre((0, 2), 50)";
-		//chaine = "rect1 = rectangle((4, 7), 20,12)";
-		//chaine = "tri1 = triangle((4, 7),(2, 14),(3, 6))";
-		//chaine = "move(c1, (10, 20))";
-		//chaine = "quit";
-
 		String cmd = "";
 		System.out.println("Commande : "+ chaine);
 		if(chaine.contains("=")) {
@@ -62,25 +135,30 @@ public class DrawingTUI {
 	}
 
 	public void afficherDessin() {
+		this.action.afficheD();
 	}
 
 	public void ajoutCmd() {
 
 		Command carre = new SwitchCarreCommand(action);
-		Command move = new SwitchMoveCommand(action);
-		Command affiche = new SwitchAfficheCommand(action);
 		Command cercle = new SwitchCercleCommand(action);
 		Command rectangle = new SwitchRectangleCommand(action);
 		Command triangle = new SwitchTriangleCommand(action);
-		Command quit = new SwitchQuitCommand();
+		Command groupeForme = new SwitchGFormeCommand(action);
+		Command move = new SwitchMoveCommand(action);
+		Command affiche = new SwitchAfficheCommand(action);
+		Command delete = new SwitchDeleteCommand(action);
+		Command quit = new SwitchQuitCommand(action);
 		this.mySwitch.register("Carre", carre);
 		this.mySwitch.register("Cercle", cercle);
 		this.mySwitch.register("Rectangle", rectangle);
 		this.mySwitch.register("Triangle", triangle);
-//		this.mySwitch.register("GroupeForme", annuler);
+		this.mySwitch.register("Groupe", groupeForme);
+		//this.mySwitch.register("effacer", annuler);
 
 		this.mySwitch.register("move", move);
 		this.mySwitch.register("show", affiche);
+		this.mySwitch.register("delete", delete);
 		this.mySwitch.register("quit", quit);
 
 	}

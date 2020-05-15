@@ -3,14 +3,32 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import Exception.NomVide;
 import fr.uvsq21506437.logicielDessin.Cercle;
 import fr.uvsq21506437.logicielDessin.Point;
 
 public class CercleDAO extends DAO<Cercle> {
+	
 
 	public CercleDAO() throws SQLException {
 		super();
+	}
+	@Override
+	public ArrayList<Cercle> init() {
+		ArrayList<Cercle> cercle = new ArrayList<Cercle>();
+			try {
+				
+				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Cercle  ");
+				ResultSet result = prepare.executeQuery();
+				while (result.next()) {
+				cercle.add(new Cercle(result.getString("nom"), new Point(result.getInt("centrex"), result.getInt("centrey")), result.getDouble("rayon")));
+				}
+			} catch (NomVide | SQLException e) {
+				e.printStackTrace();
+			}
+		return cercle;
 	}
 
 	@Override
@@ -72,7 +90,7 @@ public class CercleDAO extends DAO<Cercle> {
 		try {
 			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Cercle WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
-			int result = prepare.executeUpdate();
+			prepare.executeUpdate();
 			obj = null;
 		} catch (SQLException e) {
 			e.printStackTrace();
