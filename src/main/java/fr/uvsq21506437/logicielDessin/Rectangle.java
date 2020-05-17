@@ -17,7 +17,7 @@ public class Rectangle extends Forme{
 
 	@Override
 	public void afficher() {
-		System.out.println("Rectangle(point_HautG="+Hg.toString()+", largeur="+this.largeur+", longeur="+this.longeur+")");
+		System.out.println(this.nom +" Rectangle(point_HautG="+Hg.toString()+", largeur="+this.largeur+", longeur="+this.longeur+")");
 	}
 
 	@Override

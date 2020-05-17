@@ -9,7 +9,7 @@ public class SwitchAfficheCommand implements Command {
 	}
 	@Override
 	public void execute() {
-		action.afiche();
+		action.affiche();
 
 	}
 

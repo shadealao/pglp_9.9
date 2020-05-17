@@ -25,7 +25,7 @@ public class Action {
 	public GroupeForme dessin = new GroupeForme("dessin");
 	public DAO<GroupeForme> dessinDAO;
 	public Action(String parametre) {
-		
+
 		try {
 			this.parametre = parametre;
 			dessinDAO = new GroupeFormeDAO();
@@ -57,13 +57,13 @@ public class Action {
 			Carre C = new Carre(nom,new Point(x,y), cote);
 			CarreDAO CDAO = new CarreDAO();
 			CDAO.create(C);
-			
+
 			dessin.add(C);
 		} catch (NomVide | SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void CreateCercle() {
 		System.out.println("param dans Action CreateCercle : '"+ this.parametre+"'");
 
@@ -89,7 +89,7 @@ public class Action {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void CreateTriangle() {
 		System.out.println("param dans Action CreateTriangle : '"+ this.parametre+"'");
 
@@ -104,19 +104,19 @@ public class Action {
 		String p2y = tmp.substring(tmp.indexOf(",")+1, tmp.indexOf(")")); 
 		tmp = tmp.substring(tmp.indexOf(",")+1);
 		tmp = tmp.substring(tmp.indexOf(",")+1);
-		
+
 		String p3x = tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(","));
 		String p3y = tmp.substring(tmp.indexOf(",")+1, tmp.indexOf(")")); 
-		
+
 		int x1, y1, x2, y2, x3, y3;
 		//x1 = y1 = largeur = longeur = 12;
 
 		x1 = Integer.parseInt(p1x);
 		y1 = Integer.parseInt(p1y);
-		
+
 		x2 = Integer.parseInt(p2x);
 		y2 = Integer.parseInt(p2y);
-		
+
 		x3 = Integer.parseInt(p3x);
 		y3 = Integer.parseInt(p3y);
 		System.out.println("p1("+x1+","+y1+") \t p2("+x2+","+y2+")  \t p3("+x3+","+y3+") ");
@@ -129,7 +129,7 @@ public class Action {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void CreateRectangle() {
 		System.out.println("param dans Action CreateRectangle : '"+ this.parametre+"'");
 
@@ -160,9 +160,60 @@ public class Action {
 	}
 
 	public void addGroupeForme() {
+		String nom = parametre.substring(1,parametre.indexOf(","));
+		String nomobjet = parametre.substring(parametre.indexOf(",")+1, parametre.length()-1);
+		System.out.println("nom : "+ nom + "  nobj:"+ nomobjet);
+		int i = 0;
+		int k = 0;
+		GroupeForme gF = null;
+		boolean trouve = false;
+		ArrayList<Forme> tmp = dessin.getList();
+		for (Forme forme : tmp) {
+			try {
+				if(forme.getNom().equals(nomobjet)) {
+					k= i;
+					GroupeFormeDAO gFDAO = new GroupeFormeDAO();
+					 gF = gFDAO.read(nom);
+					trouve = true;
+					if(gF.getNom().equals("")) {
+						gF.setNom(nom);
+						dessin.add(gF);
+
+					}
+					else {
+						System.out.println(gF.getNom()+ "   "+ forme.getClass().getName());
+					}
+					if(forme.getClass().getSimpleName().equals("Carre") && (trouve == true)) {
+						gF.add(new CarreDAO().read(nomobjet));
+					}
+					else if(forme.getClass().getSimpleName().equals("Cercle") && (trouve == true)) {
+						gF.add(new CercleDAO().read(nomobjet));
+					}
+					else if(forme.getClass().getSimpleName().equals("Rectangle") && (trouve == true)) {
+						gF.add(new RectangleDAO().read(nomobjet));
+					}
+					else if(forme.getClass().getSimpleName().equals("Triangle") && (trouve == true)) {
+						gF.add(new TriangleDAO().read(nomobjet));
+						System.out.println("add tri");
+					}
+					
+					gF = gFDAO.create(gF);
+					
+				}
+				i ++;
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
+		if(trouve == true) {
+			tmp.remove(k);
+			tmp.add(gF);
+		}
+		
+		dessin.setList(tmp);
 	}
-	
+
 	public void move() {
 		System.out.println("param dans Action move(): '"+ this.parametre+"'");
 		String nom = parametre.substring(parametre.indexOf("(")+1, parametre.indexOf(",")).replace(" ", "");
@@ -195,6 +246,12 @@ public class Action {
 						DAO<Triangle> d = new TriangleDAO();
 						d.update((Triangle)forme);
 					}
+					else if(forme.getClass().getSimpleName().equals("GroupeForme")) {
+						System.out.println("move");
+						DAO<GroupeForme> d = new GroupeFormeDAO();
+						d.update((GroupeForme)forme);
+						
+					}
 					else {
 						//Exception
 					}
@@ -207,7 +264,7 @@ public class Action {
 
 	}
 
-	public void afiche() {
+	public void affiche() {
 		String nom = parametre.substring(1, parametre.length()-1);
 		for (Forme forme : dessin.getList()) {
 			try {
@@ -217,61 +274,127 @@ public class Action {
 			}
 		}
 	}
-	
+
 	public void afficheD() {
 		System.out.println("\n\n\n Affiche Dessin \n");
 		for (Forme forme : dessin.getList()) {
 			try {
-				System.out.println(forme.getNom()+"  "+ forme.toString());
+				//System.out.println(forme.getClass().getGenericSuperclass());
 				forme.afficher();
 			} catch (EstListeVide e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
+
 	public void delete() {
 		String nom = parametre.substring(1, parametre.length()-1);
 		int k = 0;
+		boolean trouve = false;
 		ArrayList<Forme> GForme = dessin.getList();
 		for(int i = 0; i<GForme.size(); i++) {
 			if(GForme.get(i).getNom().equals(nom)) {
 				k= i;
+				trouve = true;
 			}
 		}
-		
-			try {
-				if(GForme.get(k).getClass().getSimpleName().equals("Carre")) {
-					CarreDAO c = new CarreDAO();
-					c.delete((Carre) GForme.get(k));
-					GForme.remove(k);
-				}
-				else if(GForme.get(k).getClass().getSimpleName().equals("Cercle")) {
-					CercleDAO c = new CercleDAO();
-					c.delete((Cercle) GForme.get(k));
-					GForme.remove(k);
-				}
-				else if(GForme.get(k).getClass().getSimpleName().equals("Rectangle")) {
-					RectangleDAO c = new RectangleDAO();
-					c.delete((Rectangle) GForme.get(k));
-					GForme.remove(k);
-				}
-				else if(GForme.get(k).getClass().getSimpleName().equals("Triangle")) {
-					TriangleDAO c = new TriangleDAO();
-					c.delete((Triangle) GForme.get(k));
-					GForme.remove(k);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+
+		try {
+			if(GForme.get(k).getClass().getSimpleName().equals("Carre") &&(trouve == true)) {
+				CarreDAO c = new CarreDAO();
+				c.delete((Carre) GForme.get(k));
+				GForme.remove(k);
 			}
-			
-			
-		
-		
+			else if(GForme.get(k).getClass().getSimpleName().equals("Cercle") && (trouve == true)) {
+				CercleDAO c = new CercleDAO();
+				c.delete((Cercle) GForme.get(k));
+				GForme.remove(k);
+			}
+			else if(GForme.get(k).getClass().getSimpleName().equals("Rectangle") && (trouve == true)) {
+				RectangleDAO c = new RectangleDAO();
+				c.delete((Rectangle) GForme.get(k));
+				GForme.remove(k);
+			}
+			else if(GForme.get(k).getClass().getSimpleName().equals("Triangle") && (trouve == true)) {
+				TriangleDAO c = new TriangleDAO();
+				c.delete((Triangle) GForme.get(k));
+				GForme.remove(k);
+			}
+			else if(GForme.get(k).getClass().getSimpleName().equals("GroupeForme") && (trouve == true)) {
+				GroupeFormeDAO c = new GroupeFormeDAO();
+				c.delete((GroupeForme) GForme.get(k));
+				GForme.remove(k);
+			}
+			else {
+				//exception
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+
+
+
 		dessin.setList(GForme);
 		dessinDAO.delete(dessin);
 	}
-	
+
+	public void deleteG() {
+		String nom = parametre.substring(1,parametre.indexOf(","));
+		String nomobjet = parametre.substring(parametre.indexOf(",")+1, parametre.length()-1);
+
+		int k = 0;
+		int l = 0;
+		boolean trouve = false;
+		ArrayList<Forme> GForme = dessin.getList();
+		for(int i = 0; i<GForme.size(); i++) {
+			if(GForme.get(i).getNom().equals(nom)) {
+				k = i;
+				trouve = true;
+			}
+		}
+
+
+		try {
+			if(GForme.get(k).getClass().getSimpleName().equals("GroupeForme") &&(trouve == true)) {
+				GroupeFormeDAO c = new GroupeFormeDAO();
+				ArrayList<Forme> formes = ((GroupeForme) GForme.get(k)).getList();
+				trouve = false;
+				for(int i = 0; i<formes.size(); i++) {
+					if(formes.get(i).getNom().equals(nomobjet)) {
+						l = i;
+						trouve = true;
+					}
+				}
+				if(trouve == true) { 
+					for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()*/) {
+						forme.afficher();
+					}
+					formes.remove(l);
+					((GroupeForme) GForme.get(k)).setList(formes);
+					c.update(((GroupeForme) GForme.get(k)));
+					System.out.println("ici");
+					for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()*/) {
+						forme.afficher();
+					}
+				//	c.update(((GroupeForme) GForme.get(k)));
+					
+				}
+				
+			}
+		} catch (SQLException | EstListeVide e) {
+			e.printStackTrace();
+		}
+
+
+
+
+
+		//dessin.setList(GForme);
+		//dessinDAO.delete(dessin);
+	}
+
+
 	public void quit() {
 		afficheD();
 		System.out.println("Fermeture logiciel dessin");

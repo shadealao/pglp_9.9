@@ -17,7 +17,7 @@ public class Triangle extends Forme{
 
 	@Override
 	public void afficher() {
-		System.out.println("Triangle(p1="+p1.toString()+", p2="+p2.toString()+", p3="+p3.toString()+")");
+		System.out.println(this.nom +" Triangle(p1="+p1.toString()+", p2="+p2.toString()+", p3="+p3.toString()+")");
 	}
 
 	@Override

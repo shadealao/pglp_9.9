@@ -16,7 +16,7 @@ public class Carre extends Forme implements Command{
 
 	@Override
 	public void afficher() {
-		System.out.println("Carre(point_HautG="+Hg.toString()+", cote="+this.cote+")");
+		System.out.println(this.nom +" Carre(point_HautG="+Hg.toString()+", cote="+this.cote+")");
 	}
 
 	@Override

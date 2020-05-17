@@ -15,6 +15,7 @@ public class GroupeForme extends Forme{
 	@Override
 	public void afficher() throws EstListeVide {
 		if(this.formes.size() == 0) throw new EstListeVide("groupe de formes");
+		System.out.println("Groupe : "+this.nom);
 		for (Forme forme : this.formes) {
 			forme.afficher();
 		}
@@ -35,6 +36,10 @@ public class GroupeForme extends Forme{
 	
 	public void remove(Forme f) {
 		this.formes.remove(f);
+	}
+	
+	public void clear() {
+		this.formes.clear();
 	}
 	
 	/*public String getNom() {

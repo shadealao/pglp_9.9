@@ -130,6 +130,8 @@ public class DrawingTUI {
 		ajoutCmd();
 		this.action.setParametre(parametre);
 		this.mySwitch.execute(cmd);
+		action.dessin.clear();
+		initForme();
 		parametre="";
 
 	}
@@ -148,17 +150,18 @@ public class DrawingTUI {
 		Command move = new SwitchMoveCommand(action);
 		Command affiche = new SwitchAfficheCommand(action);
 		Command delete = new SwitchDeleteCommand(action);
+		Command deleteG = new SwitchDeleteGCommand(action);
 		Command quit = new SwitchQuitCommand(action);
+		
 		this.mySwitch.register("Carre", carre);
 		this.mySwitch.register("Cercle", cercle);
 		this.mySwitch.register("Rectangle", rectangle);
 		this.mySwitch.register("Triangle", triangle);
-		this.mySwitch.register("Groupe", groupeForme);
-		//this.mySwitch.register("effacer", annuler);
-
+		this.mySwitch.register("groupe", groupeForme);
 		this.mySwitch.register("move", move);
 		this.mySwitch.register("show", affiche);
 		this.mySwitch.register("delete", delete);
+		this.mySwitch.register("deletegroupe", deleteG);
 		this.mySwitch.register("quit", quit);
 
 	}

@@ -20,7 +20,7 @@ public class Cercle extends Forme{
 
 	@Override
 	public void afficher() {
-		System.out.println("Cercle(centre="+centre.toString()+", rayon="+this.rayon+")");
+		System.out.println(this.nom +" Cercle(centre="+centre.toString()+", rayon="+this.rayon+")");
 	}
 
 	@Override

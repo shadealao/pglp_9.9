@@ -18,7 +18,7 @@ public class ConnectionTest extends TestCase {
 	public void testApp() throws SQLException {
 		BDD db = new BDD();
 		db.connection();
-
+/*
 		db.DropTable("GroupeForme");
 		db.DropTable("Carre");
 		db.DropTable("Rectangle");
@@ -30,7 +30,7 @@ public class ConnectionTest extends TestCase {
 		db.creationTableRectangle();
 		db.creationTableTriangle();
 		db.creationTableGroupeForme();
-
+*/
 		db.AfficheTable("Cercle");
 		db.AfficheTable("Carre");
 		db.AfficheTable("Rectangle");
