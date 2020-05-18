@@ -69,7 +69,7 @@ public class DAOTest extends TestCase{
 	
 	public void testRectangleDAO(){
 		try {
-		DAO<Rectangle> c1 = new RectangleDAO();
+		DAO<Rectangle> c1 = (DAO<Rectangle>) new RectangleDAO();
 		Rectangle f1 = new Rectangle("c1", new Point(2, 41), 2.1, 8);
 		
 		System.out.println("************* RECTANGLE *************");
@@ -92,7 +92,7 @@ public class DAOTest extends TestCase{
 	
 	public void testTriangleDAO() {
 		try {
-		DAO<Triangle> c1 = new TriangleDAO();
+		DAO<Triangle> c1 = (DAO<Triangle>) new TriangleDAO();
 		Triangle f1 = new Triangle("c1", new Point(2, 1),new Point(4, 4), new Point(7, 10) );
 		
 		System.out.println("************* TRIANGLE *************");
@@ -115,7 +115,7 @@ public class DAOTest extends TestCase{
 	
 	public void testGroupeFormeDAO()  {
 		try {
-		DAO<GroupeForme> c1 = new GroupeFormeDAO();
+		DAO<GroupeForme> c1 = (DAO<GroupeForme>) new GroupeFormeDAO();
 		DAO<Rectangle> R = new RectangleDAO();
 		DAO<Carre> C = new CarreDAO();
 		DAO<Cercle> CE = new CercleDAO();

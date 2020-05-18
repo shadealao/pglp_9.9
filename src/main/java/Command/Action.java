@@ -9,6 +9,7 @@ import DAO.DAO;
 import DAO.GroupeFormeDAO;
 import DAO.RectangleDAO;
 import DAO.TriangleDAO;
+import Exception.AbsObjet;
 import Exception.EstListeVide;
 import Exception.NomVide;
 import composite.GroupeForme;
@@ -21,11 +22,14 @@ import fr.uvsq21506437.logicielDessin.Triangle;
 
 public class Action {
 	private String parametre;
-	//public ArrayList <Forme>dessin = new ArrayList<Forme>();
-	public GroupeForme dessin = new GroupeForme("dessin");
-	public DAO<GroupeForme> dessinDAO;
+	protected GroupeForme dessin = new GroupeForme("dessin");
+	private DAO<GroupeForme> dessinDAO;
+	
+	/**
+	 * Constructeur.
+	 * @param parametre paramètre d'une commande entrée par l'utilisateur
+	 */
 	public Action(String parametre) {
-
 		try {
 			this.parametre = parametre;
 			dessinDAO = new GroupeFormeDAO();
@@ -33,12 +37,17 @@ public class Action {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param parametre MAJ parametres
+	 */
 	public void setParametre(String parametre) {
 		this.parametre = parametre;
 	}
 
+	
 	public void CreateCarre() {
-		System.out.println("param dans Action CreateCarre : '"+ this.parametre+"'");
 
 		String nom = parametre.substring(0, parametre.indexOf("=")).replace(" ", "");
 		String tmp = parametre.substring(parametre.indexOf("(")+1, parametre.length()-1).replace(" ", "");
@@ -65,8 +74,6 @@ public class Action {
 	}
 
 	public void CreateCercle() {
-		System.out.println("param dans Action CreateCercle : '"+ this.parametre+"'");
-
 		String nom = parametre.substring(0, parametre.indexOf("=")).replace(" ", "");
 		String tmp = parametre.substring(parametre.indexOf("(")+1, parametre.length()-1).replace(" ", "");
 		String t1 = tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(","));
@@ -91,8 +98,6 @@ public class Action {
 	}
 
 	public void CreateTriangle() {
-		System.out.println("param dans Action CreateTriangle : '"+ this.parametre+"'");
-
 		String nom = parametre.substring(0, parametre.indexOf("=")).replace(" ", "");
 		String tmp = parametre.substring(parametre.indexOf("(")+1, parametre.length()-1).replace(" ", "");
 		String p1x = tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(","));
@@ -109,8 +114,6 @@ public class Action {
 		String p3y = tmp.substring(tmp.indexOf(",")+1, tmp.indexOf(")")); 
 
 		int x1, y1, x2, y2, x3, y3;
-		//x1 = y1 = largeur = longeur = 12;
-
 		x1 = Integer.parseInt(p1x);
 		y1 = Integer.parseInt(p1y);
 
@@ -131,8 +134,6 @@ public class Action {
 	}
 
 	public void CreateRectangle() {
-		System.out.println("param dans Action CreateRectangle : '"+ this.parametre+"'");
-
 		String nom = parametre.substring(0, parametre.indexOf("=")).replace(" ", "");
 		String tmp = parametre.substring(parametre.indexOf("(")+1, parametre.length()-1).replace(" ", "");
 		String t1 = tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(","));
@@ -159,7 +160,7 @@ public class Action {
 		}
 	}
 
-	public void addGroupeForme() {
+	public void addGroupeForme() throws AbsObjet {
 		String nom = parametre.substring(1,parametre.indexOf(","));
 		String nomobjet = parametre.substring(parametre.indexOf(",")+1, parametre.length()-1);
 		System.out.println("nom : "+ nom + "  nobj:"+ nomobjet);
@@ -178,10 +179,6 @@ public class Action {
 					if(gF.getNom().equals("")) {
 						gF.setNom(nom);
 						dessin.add(gF);
-
-					}
-					else {
-						System.out.println(gF.getNom()+ "   "+ forme.getClass().getName());
 					}
 					if(forme.getClass().getSimpleName().equals("Carre") && (trouve == true)) {
 						gF.add(new CarreDAO().read(nomobjet));
@@ -195,6 +192,9 @@ public class Action {
 					else if(forme.getClass().getSimpleName().equals("Triangle") && (trouve == true)) {
 						gF.add(new TriangleDAO().read(nomobjet));
 						System.out.println("add tri");
+					}
+					else {
+						throw new AbsObjet(forme.getClass().getSimpleName());
 					}
 					
 					gF = gFDAO.create(gF);
@@ -214,8 +214,7 @@ public class Action {
 		dessin.setList(tmp);
 	}
 
-	public void move() {
-		System.out.println("param dans Action move(): '"+ this.parametre+"'");
+	public void move() throws AbsObjet{
 		String nom = parametre.substring(parametre.indexOf("(")+1, parametre.indexOf(",")).replace(" ", "");
 		String tmp = parametre.substring(parametre.indexOf(",")+1, parametre.length()-1).replace(" ", "");
 		String t1 = tmp.substring(tmp.indexOf("(")+1, tmp.indexOf(","));
@@ -253,7 +252,7 @@ public class Action {
 						
 					}
 					else {
-						//Exception
+						throw new AbsObjet(forme.getClass().getSimpleName());
 					}
 				}
 			}
@@ -264,6 +263,9 @@ public class Action {
 
 	}
 
+	/** 
+	 * Affichage d'une seule forme.
+	 */
 	public void affiche() {
 		String nom = parametre.substring(1, parametre.length()-1);
 		for (Forme forme : dessin.getList()) {
@@ -275,11 +277,13 @@ public class Action {
 		}
 	}
 
+	/**
+	 * Affichage de toutes les formes càd dessin
+	 */
 	public void afficheD() {
 		System.out.println("\n\n\n Affiche Dessin \n");
 		for (Forme forme : dessin.getList()) {
 			try {
-				//System.out.println(forme.getClass().getGenericSuperclass());
 				forme.afficher();
 			} catch (EstListeVide e) {
 				e.printStackTrace();
@@ -287,7 +291,7 @@ public class Action {
 		}
 	}
 
-	public void delete() {
+	public void delete() throws AbsObjet {
 		String nom = parametre.substring(1, parametre.length()-1);
 		int k = 0;
 		boolean trouve = false;
@@ -298,6 +302,9 @@ public class Action {
 				trouve = true;
 			}
 		}
+		if(trouve == false )
+			throw new AbsObjet(nom);
+		
 
 		try {
 			if(GForme.get(k).getClass().getSimpleName().equals("Carre") &&(trouve == true)) {
@@ -326,19 +333,19 @@ public class Action {
 				GForme.remove(k);
 			}
 			else {
-				//exception
+				throw new AbsObjet(GForme.get(k).getClass().getSimpleName());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-
-
-
 		dessin.setList(GForme);
 		dessinDAO.delete(dessin);
 	}
 
+	/**
+	 * Enlever une forme d'un grp
+	 */
 	public void deleteG() {
 		String nom = parametre.substring(1,parametre.indexOf(","));
 		String nomobjet = parametre.substring(parametre.indexOf(",")+1, parametre.length()-1);
@@ -358,33 +365,14 @@ public class Action {
 					k = i;
 					trouve = true;
 					if(GForme.get(k).getClass().getSimpleName().equals("GroupeForme") &&(trouve == true)) {
-						
 						ArrayList<Forme> formes = ((GroupeForme) GForme.get(k)).getList();
 						for(int j = 0; j<formes.size(); j++) {
 							if(formes.get(j).getNom().equals(nomobjet)) {
 								l = j;
-								
 								trouve2 = true;
-								System.out.println("je supprime ici==> "+formes.get(j).getNom()+ " et \t"+GForme.get(i).getNom());
 							}
 						}
-						if(trouve2 == true) { 
-							for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()*/) {
-								forme.afficher();
-							}
-							
-							/*
-							formes.remove(l);
-							((GroupeForme) GForme.get(k)).setList(formes);
-							c.update(((GroupeForme) GForme.get(k)));
-							System.out.println("ici");
-							for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()/) {
-								forme.afficher();
-							}
-							*/
-						//	c.update(((GroupeForme) GForme.get(k)));
-							
-						}
+					
 						
 					}
 				}
@@ -393,30 +381,16 @@ public class Action {
 				System.out.println("derniere vérif ==> "+ GForme.get(k).getNom());
 				GForme.remove(k);
 				GroupeFormeDAO c = new GroupeFormeDAO();
-				//dessin.clear();
-				//dessin.setList(GForme);
-				//c.update(GForme.);
-				for(int i = 0; i<GForme.size(); i++) {
-					System.out.println("liste ==> "+ GForme.get(i).getNom());
-					//c.update((GroupeForme)GForme);
-				}
 				for (Forme forme : GForme) {
 					//c.update((GroupeForme) forme);
 				}
 				dessin.setList(GForme);
 				
-					dessin.afficher();
-					//System.out.println("liste ==> "+ dessin..get(i).getNom());
-				
 			}
 			
-		} catch (SQLException | EstListeVide e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-
-
-
 
 		//dessin.setList(GForme);
 		//dessinDAO.delete(dessin);

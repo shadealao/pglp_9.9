@@ -9,9 +9,9 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class BDD {
-	protected Connection con = null;
-	String dburl = "jdbc:derby:test;create=true";
-	Properties connectionProps = new Properties();
+	public Connection connect = null;
+	private String dburl = "jdbc:derby:test;create=true";
+	private Properties connectionProps = new Properties();
 	public void connection () throws SQLException {
 		/*Object userName = "shade";
 		connectionProps.put("user", userName);
@@ -32,14 +32,14 @@ public class BDD {
 			creationTableCercle(con);
 		}
 		*/
-		con = DriverManager.getConnection(dburl,
+		connect = DriverManager.getConnection(dburl,
 				"myLogin",
 				"myPassword");
 
 	}
 
 	public void creationTableCercle() throws SQLException {
-		try (Statement stmt = this.con.createStatement()) {
+		try (Statement stmt = this.connect.createStatement()) {
 			stmt.executeUpdate("CREATE TABLE Cercle ("
 					+ "nom VARCHAR(100) PRIMARY KEY NOT NULL,"
 					+ "centrex Int,"
@@ -52,7 +52,7 @@ public class BDD {
 	}
 	
 	public void creationTableRectangle() throws SQLException {
-		try (Statement stmt = this.con.createStatement()) {
+		try (Statement stmt = this.connect.createStatement()) {
 			stmt.executeUpdate("CREATE TABLE Rectangle ("
 					+ "nom VARCHAR(100) PRIMARY KEY NOT NULL,"
 					+ "HGx Int,"
@@ -66,7 +66,7 @@ public class BDD {
 	}
 	
 	public void creationTableCarre() throws SQLException {
-		try (Statement stmt = this.con.createStatement()) {
+		try (Statement stmt = this.connect.createStatement()) {
 			stmt.executeUpdate("CREATE TABLE Carre ("
 					+ "nom VARCHAR(100) PRIMARY KEY NOT NULL,"
 					+ "HGx Int,"
@@ -79,7 +79,7 @@ public class BDD {
 	}
 	
 	public void creationTableTriangle() throws SQLException {
-		try (Statement stmt = this.con.createStatement()) {
+		try (Statement stmt = this.connect.createStatement()) {
 			stmt.executeUpdate("CREATE TABLE Triangle ("
 					+ "nom VARCHAR(100) PRIMARY KEY NOT NULL,"
 					+ "p1x Int,"
@@ -95,7 +95,7 @@ public class BDD {
 	}
 	
 	public void creationTableGroupeForme() throws SQLException {
-		try (Statement stmt = this.con.createStatement()) {
+		try (Statement stmt = this.connect.createStatement()) {
 			stmt.executeUpdate("CREATE TABLE GroupeForme ("
 					+ "nom VARCHAR(100) NOT NULL,"
 					+ "typeobjet VARCHAR(100) NOT NULL,"
@@ -111,7 +111,7 @@ public class BDD {
 	public void AfficheTable(String table) throws SQLException {
 		String r = "";
 		try {
-			PreparedStatement prepare = con.prepareStatement("SELECT * FROM "+table);
+			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM "+table);
 			//prepare.setString(1, table);
 			ResultSet result = prepare.executeQuery();
 			System.out.println("Table : "+ table);
@@ -132,7 +132,7 @@ public class BDD {
 	public void DropTable(String table) {
 		PreparedStatement prepare;
 		try {
-			prepare = con.prepareStatement("DROP TABLE "+table);
+			prepare = connect.prepareStatement("DROP TABLE "+table);
 			prepare.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

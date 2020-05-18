@@ -20,7 +20,7 @@ public class CercleDAO extends DAO<Cercle> {
 		ArrayList<Cercle> cercle = new ArrayList<Cercle>();
 			try {
 				
-				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Cercle  ");
+				PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Cercle  ");
 				ResultSet result = prepare.executeQuery();
 				while (result.next()) {
 				cercle.add(new Cercle(result.getString("nom"), new Point(result.getInt("centrex"), result.getInt("centrey")), result.getDouble("rayon")));
@@ -35,7 +35,7 @@ public class CercleDAO extends DAO<Cercle> {
 	public Cercle create(Cercle obj) {
 	
 		try {
-			PreparedStatement prepare = connect.prepareStatement("INSERT INTO Cercle (nom, centrex, centrey, rayon)"
+			PreparedStatement prepare = db.connect.prepareStatement("INSERT INTO Cercle (nom, centrex, centrey, rayon)"
 					+ "VALUES(?,?,?,?)");
 			prepare.setString(1, obj.getNom());
 			prepare.setInt(2, obj.getPoint().getX());
@@ -53,7 +53,7 @@ public class CercleDAO extends DAO<Cercle> {
 	public Cercle read(String nom) {
 		Cercle obj = null;
 		try {
-			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Cercle WHERE nom = ? ");
+			PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Cercle WHERE nom = ? ");
 			prepare.setString(1, nom);
 			ResultSet result = prepare.executeQuery();
 			while (result.next()) {
@@ -70,7 +70,7 @@ public class CercleDAO extends DAO<Cercle> {
 	@Override
 	public Cercle update(Cercle obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("UPDATE Cercle"
+			PreparedStatement prepare = db.connect.prepareStatement("UPDATE Cercle"
 					+ " SET centrex = ? , centrey = ? , rayon = ?"
 					+ " WHERE nom = ?");
 			prepare.setInt(1, obj.getPoint().getX());
@@ -88,7 +88,7 @@ public class CercleDAO extends DAO<Cercle> {
 	@Override
 	public void delete(Cercle obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Cercle WHERE nom = ?");
+			PreparedStatement prepare = db.connect.prepareStatement("DELETE FROM Cercle WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
 			prepare.executeUpdate();
 			obj = null;

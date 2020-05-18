@@ -2,15 +2,17 @@ package Command;
 
 
 /**
- * Hello world!
- *
+ * Main Logiciel dessin
  */
 public class DrawingApp {
 	
 	private static DrawingApp INSTANCE ;
 	
 	private DrawingApp() {
-		
+		DrawingTUI d = new DrawingTUI();
+	       while(true) {
+	    	   d.nextCommand();
+	       }
 	}
 	
 	public static DrawingApp getInstance() {
@@ -20,9 +22,6 @@ public class DrawingApp {
 	
 	
     public static void main( String[] args ){
-       DrawingTUI d = new DrawingTUI();
-       while(true) {
-    	   d.nextCommand();
-       }
+      INSTANCE = getInstance();
     }
 }

@@ -1,5 +1,7 @@
 package Command;
 
+import Exception.AbsObjet;
+
 public class SwitchGFormeCommand implements Command {
 	protected Action action;
 	
@@ -9,7 +11,11 @@ public class SwitchGFormeCommand implements Command {
 	
 	@Override
 	public void execute() {
-		action.addGroupeForme();
+		try {
+			action.addGroupeForme();
+		} catch (AbsObjet e) {
+			e.printStackTrace();
+		}
 
 	}
 

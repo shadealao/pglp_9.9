@@ -20,7 +20,7 @@ public class TriangleDAO extends DAO<Triangle>{
 		ArrayList<Triangle> triangle = new ArrayList<Triangle>();
 			try {
 				
-				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Triangle ");
+				PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Triangle ");
 				ResultSet result = prepare.executeQuery();
 				while (result.next()) {
 				triangle.add(new Triangle(result.getString("nom"), new Point(result.getInt("p1x"), result.getInt("p1y")),  new Point(result.getInt("p2x"), result.getInt("p2y")),  new Point(result.getInt("p3x"), result.getInt("p3y"))));
@@ -34,7 +34,7 @@ public class TriangleDAO extends DAO<Triangle>{
 	@Override
 	public Triangle create(Triangle obj)  {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("INSERT INTO Triangle (nom, p1x, p1y, p2x, p2y, p3x, p3y)"
+			PreparedStatement prepare = db.connect.prepareStatement("INSERT INTO Triangle (nom, p1x, p1y, p2x, p2y, p3x, p3y)"
 					+ " VALUES(?,?,?,?,?,?,?)");
 			prepare.setString(1, obj.getNom());
 			prepare.setInt(2, obj.getPoint1().getX());
@@ -55,7 +55,7 @@ public class TriangleDAO extends DAO<Triangle>{
 	public Triangle read(String nom) {
 		Triangle obj = null;
 		try {
-			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Triangle WHERE nom = ? ");
+			PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Triangle WHERE nom = ? ");
 			prepare.setString(1, nom);
 			ResultSet result = prepare.executeQuery();
 			while (result.next()) {
@@ -72,7 +72,7 @@ public class TriangleDAO extends DAO<Triangle>{
 	@Override
 	public Triangle update(Triangle obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("UPDATE Triangle"
+			PreparedStatement prepare = db.connect.prepareStatement("UPDATE Triangle"
 					+ " SET p1x = ? , p1y = ? , p2x = ? , p2y = ? , p3x = ? , p3y = ? "
 					+ " WHERE nom = ?");
 			prepare.setInt(1, obj.getPoint1().getX());
@@ -93,7 +93,7 @@ public class TriangleDAO extends DAO<Triangle>{
 	@Override
 	public void delete(Triangle obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Triangle WHERE nom = ?");
+			PreparedStatement prepare = db.connect.prepareStatement("DELETE FROM Triangle WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
 			prepare.executeUpdate();
 			obj = null;

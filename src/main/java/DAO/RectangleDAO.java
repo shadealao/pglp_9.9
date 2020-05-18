@@ -20,7 +20,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 		ArrayList<Rectangle> rectangle = new ArrayList<Rectangle>();
 			try {
 				
-				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Rectangle ");
+				PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Rectangle ");
 				ResultSet result = prepare.executeQuery();
 				while (result.next()) {
 				rectangle.add(new Rectangle(result.getString("nom"), new Point(result.getInt("HGx"), result.getInt("HGy")), result.getDouble("largeur"), result.getDouble("longeur")));
@@ -34,7 +34,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 	@Override
 	public Rectangle create(Rectangle obj)  {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("INSERT INTO Rectangle (nom, HGx, HGy, largeur, longeur)"
+			PreparedStatement prepare = db.connect.prepareStatement("INSERT INTO Rectangle (nom, HGx, HGy, largeur, longeur)"
 					+ " VALUES(?,?,?,?,?)");
 			prepare.setString(1, obj.getNom());
 			prepare.setInt(2, obj.getPoint().getX());
@@ -53,7 +53,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 	public Rectangle read(String nom) {
 		Rectangle obj = null;
 		try {
-			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Rectangle WHERE nom = ? ");
+			PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Rectangle WHERE nom = ? ");
 			prepare.setString(1, nom);
 			ResultSet result = prepare.executeQuery();
 			while (result.next()) {
@@ -70,7 +70,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 	@Override
 	public Rectangle update(Rectangle obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("UPDATE Rectangle"
+			PreparedStatement prepare = db.connect.prepareStatement("UPDATE Rectangle"
 					+ " SET HGx = ? , HGy = ? , largeur = ? , longeur = ? "
 					+ " WHERE nom = ?");
 			prepare.setInt(1, obj.getPoint().getX());
@@ -89,7 +89,7 @@ public class RectangleDAO extends DAO<Rectangle>{
 	@Override
 	public void delete(Rectangle obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Rectangle WHERE nom = ?");
+			PreparedStatement prepare = db.connect.prepareStatement("DELETE FROM Rectangle WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
 			prepare.executeUpdate();
 			obj = null;

@@ -26,11 +26,11 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 		ArrayList<Forme> GF = new ArrayList<Forme>();
 
 		try {
-			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM GroupeForme ");
+			PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM GroupeForme ");
 			ResultSet result = prepare.executeQuery();
 
 			while (result.next()) {
-				PreparedStatement prep = connect.prepareStatement("SELECT * FROM "+ result.getString("typeobjet") +" WHERE nom = '"+ result.getString("nomobjet")+"'");
+				PreparedStatement prep = db.connect.prepareStatement("SELECT * FROM "+ result.getString("typeobjet") +" WHERE nom = '"+ result.getString("nomobjet")+"'");
 				ResultSet res = prep.executeQuery();
 				GroupeForme GForme = new GroupeForme(result.getString("nom"));
 				while (res.next()) {
@@ -66,14 +66,14 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 
 		for (Forme forme : formes) {
 			try {
-				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM GroupeForme WHERE nom = ? AND typeobjet = ? AND nomobjet = ?");
+				PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM GroupeForme WHERE nom = ? AND typeobjet = ? AND nomobjet = ?");
 				prepare.setString(1, obj.getNom());
 				prepare.setString(2, forme.getClass().getSimpleName().toString());
 				prepare.setString(3, forme.getNom());
 				ResultSet res = prepare.executeQuery();
 				if(!res.next()) {
 
-					prepare = connect.prepareStatement("INSERT INTO GroupeForme (nom, typeobjet, nomobjet)"
+					prepare = db.connect.prepareStatement("INSERT INTO GroupeForme (nom, typeobjet, nomobjet)"
 							+ " VALUES(?,?,?)");
 					prepare.setString(1, obj.getNom());
 					prepare.setString(2, forme.getClass().getSimpleName().toString());
@@ -94,7 +94,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 	public GroupeForme read(String nom) {
 		GroupeForme obj = null;
 		try {
-			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM GroupeForme WHERE nom = ? ");
+			PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM GroupeForme WHERE nom = ? ");
 			prepare.setString(1, nom);
 			ResultSet result = prepare.executeQuery();
 			obj = new GroupeForme(nom);
@@ -103,7 +103,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 
 				try {
 
-					PreparedStatement prep = connect.prepareStatement("SELECT * FROM "+ result.getString("typeobjet") +" WHERE nom = '"+ result.getString("nomobjet")+"'");
+					PreparedStatement prep = db.connect.prepareStatement("SELECT * FROM "+ result.getString("typeobjet") +" WHERE nom = '"+ result.getString("nomobjet")+"'");
 					ResultSet res = prep.executeQuery();
 					while (res.next()) {
 						if(result.getString("typeobjet").equals("Carre")) {
@@ -143,7 +143,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 				String table = forme.getClass().getSimpleName();
 				if(table.equalsIgnoreCase("Carre")) {
 					String nom = forme.getNom();
-					PreparedStatement prep = connect.prepareStatement("UPDATE Carre"
+					PreparedStatement prep = db.connect.prepareStatement("UPDATE Carre"
 							+ " SET HGx = ? , HGy = ? , cote = ?"
 							+ " WHERE nom = ?");
 
@@ -154,7 +154,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 					prep.executeUpdate();
 				} else if(table.equalsIgnoreCase("Cercle")) {
 					String nom = forme.getNom();
-					PreparedStatement prep = connect.prepareStatement("UPDATE Cercle"
+					PreparedStatement prep = db.connect.prepareStatement("UPDATE Cercle"
 							+ " SET centrex = ? , centrey = ? , rayon = ?"
 							+ " WHERE nom = ?");
 					prep.setInt(1, ((Cercle) forme).getPoint().getX());
@@ -165,7 +165,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 
 				} else if(table.equalsIgnoreCase("Rectangle")) {
 					String nom = forme.getNom();
-					PreparedStatement prep = connect.prepareStatement("UPDATE Rectangle"
+					PreparedStatement prep = db.connect.prepareStatement("UPDATE Rectangle"
 							+ " SET HGx = ? , HGy = ? , largeur = ? , longeur = ? "
 							+ " WHERE nom = ?");
 					prep.setInt(1, ((Rectangle) forme).getPoint().getX());
@@ -176,7 +176,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 					prep.executeUpdate();
 				} else if(table.equalsIgnoreCase("Triangle")) {
 					String nom = forme.getNom();
-					PreparedStatement prep = connect.prepareStatement("UPDATE Triangle"
+					PreparedStatement prep = db.connect.prepareStatement("UPDATE Triangle"
 							+ " SET p1x = ? , p1y = ? , p2x = ? , p2y = ? , p3x = ? , p3y = ? "
 							+ " WHERE nom = ?");
 					prep.setInt(1, ((Triangle) forme).getPoint1().getX());
@@ -209,7 +209,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 	public void delete(GroupeForme obj) {
 		try {
 			//obj.getList();
-			PreparedStatement prepare = connect.prepareStatement("DELETE FROM GroupeForme WHERE nom = ? ");
+			PreparedStatement prepare = db.connect.prepareStatement("DELETE FROM GroupeForme WHERE nom = ? ");
 			prepare.setString(1, obj.getNom());
 			prepare.executeUpdate();
 			obj = null;

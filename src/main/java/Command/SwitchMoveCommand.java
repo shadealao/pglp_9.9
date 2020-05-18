@@ -1,5 +1,7 @@
 package Command;
 
+import Exception.AbsObjet;
+
 public class SwitchMoveCommand implements Command {
 public Action action;
 	
@@ -8,7 +10,11 @@ public Action action;
 	}
 	@Override
 	public void execute() {
-		this.action.move();
+		try {
+			this.action.move();
+		} catch (AbsObjet e) {
+			e.printStackTrace();
+		}
 	}
 
 }

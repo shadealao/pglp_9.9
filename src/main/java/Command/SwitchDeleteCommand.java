@@ -1,5 +1,7 @@
 package Command;
 
+import Exception.AbsObjet;
+
 public class SwitchDeleteCommand implements Command {
 	protected Action action;
 
@@ -8,7 +10,11 @@ public class SwitchDeleteCommand implements Command {
 	}
 	@Override
 	public void execute() {
-		action.delete();
+		try {
+			action.delete();
+		} catch (AbsObjet e) {
+			e.printStackTrace();
+		}
 
 	}
 

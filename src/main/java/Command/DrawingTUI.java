@@ -13,15 +13,14 @@ import fr.uvsq21506437.logicielDessin.Forme;
 
 
 public class DrawingTUI {
-	public Switch mySwitch;
-	public Scanner sc; //scanner
+	private Switch mySwitch;
+	private Scanner sc; //scanner
 	private String chaine; //chaine entrée
-	protected String parametre = "";
+	protected String parametre = ""; //paramètre de chaque commande entrées par l'utilisateur
 	protected Action action;
 
 	public DrawingTUI() {
-		Regles();
-		
+		Regles();		
 		sc = new Scanner(System.in);
 		chaine = "";
 		mySwitch = new Switch();
@@ -30,6 +29,9 @@ public class DrawingTUI {
 		afficherDessin();
 	}
 
+	/**
+	 * Affichage des règles 
+	 */
 	public void Regles() {
 		String s = "Les règles :\n"
 				+ "créer : car1 = carre((0, 2), 50)\n"
@@ -37,12 +39,14 @@ public class DrawingTUI {
 				+ "afficher : show(car1)\n"
 				+ "ajouter une forme dans un groupe : groupe(grp1,car1)\n"
 				+ "effacer : delete(car1)\n"
-				+ "effacer un membre d'un groupe: deletegroupe(grp1, car1)\n"
 				+ "arrêter l'application : quit";
 		System.out.println(s);
 								
 	}
 	
+	/**
+	 * Récupération de toutes les formes précédements enregistrées dans la BDD.
+	 */
 	public void initForme() {
 		//carre
 		CarreDAO CDAO = null;
@@ -97,10 +101,12 @@ public class DrawingTUI {
 		
 	}
 
+	/**
+	 * Lecture de la commande saisie par l'utilisateur
+	 */
 	public void nextCommand() {
 		chaine = sc.nextLine().toString();
 		String cmd = "";
-		System.out.println("Commande : "+ chaine);
 		if(chaine.contains("=")) {
 			parametre += chaine.substring(0, chaine.indexOf("=")+ 1);
 			parametre += chaine.substring(chaine.indexOf("("));
@@ -109,9 +115,6 @@ public class DrawingTUI {
 			cmd = cmd.substring(0, cmd.indexOf("("));
 			cmd = cmd.replaceAll(" ", "");
 			cmd = cmd.substring(0, 1).toUpperCase()+ cmd.substring(1);
-			System.out.println("action : '"+ cmd+"'  et parametre : "+ parametre);
-
-
 		}
 		else if(chaine.contains("("))  {
 			parametre += chaine.substring(chaine.indexOf("("));
@@ -120,7 +123,6 @@ public class DrawingTUI {
 			cmd = chaine.substring(0, chaine.indexOf("("));
 			cmd = cmd.replaceAll(" ", "");
 			cmd = cmd.toLowerCase();
-			System.out.println("action : '"+ cmd+"'  et parametre : "+ parametre);
 		}
 		else {
 			cmd = chaine.replaceAll(" ", "");
@@ -136,10 +138,16 @@ public class DrawingTUI {
 
 	}
 
+	/**
+	 * Affiche dessin càd toutes les formes créées
+	 */
 	public void afficherDessin() {
 		this.action.afficheD();
 	}
 
+	/**
+	 * Enregistrement des commandes
+	 */
 	public void ajoutCmd() {
 
 		Command carre = new SwitchCarreCommand(action);

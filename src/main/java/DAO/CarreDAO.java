@@ -20,7 +20,7 @@ public class CarreDAO extends DAO<Carre>{
 		ArrayList<Carre> carre = new ArrayList<Carre>();
 			try {
 				
-				PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Carre ");
+				PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Carre ");
 				ResultSet result = prepare.executeQuery();
 				while (result.next()) {
 				carre.add(new Carre(result.getString("nom"), new Point(result.getInt("HGx"), result.getInt("HGy")), result.getDouble("cote")));
@@ -34,7 +34,7 @@ public class CarreDAO extends DAO<Carre>{
 	@Override
 	public Carre create(Carre obj)  {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("INSERT INTO Carre (nom, HGx, HGy, cote)"
+			PreparedStatement prepare = db.connect.prepareStatement("INSERT INTO Carre (nom, HGx, HGy, cote)"
 					+ " VALUES(?,?,?,?)");
 			prepare.setString(1, obj.getNom());
 			prepare.setInt(2, obj.getPoint().getX());
@@ -52,7 +52,7 @@ public class CarreDAO extends DAO<Carre>{
 	public Carre read(String nom) {
 		Carre obj = null;
 		try {
-			PreparedStatement prepare = connect.prepareStatement("SELECT * FROM Carre WHERE nom = ? ");
+			PreparedStatement prepare = db.connect.prepareStatement("SELECT * FROM Carre WHERE nom = ? ");
 			prepare.setString(1, nom);
 			ResultSet result = prepare.executeQuery();
 			while (result.next()) {
@@ -69,7 +69,7 @@ public class CarreDAO extends DAO<Carre>{
 	@Override
 	public Carre update(Carre obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("UPDATE Carre"
+			PreparedStatement prepare = db.connect.prepareStatement("UPDATE Carre"
 					+ " SET HGx = ? , HGy = ? , cote = ?"
 					+ " WHERE nom = ?");
 			prepare.setInt(1, obj.getPoint().getX());
@@ -88,7 +88,7 @@ public class CarreDAO extends DAO<Carre>{
 	@Override
 	public void delete(Carre obj) {
 		try {
-			PreparedStatement prepare = connect.prepareStatement("DELETE FROM Carre WHERE nom = ?");
+			PreparedStatement prepare = db.connect.prepareStatement("DELETE FROM Carre WHERE nom = ?");
 			prepare.setString(1, obj.getNom());
 			prepare.executeUpdate();
 			obj = null;
