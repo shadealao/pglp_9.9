@@ -22,7 +22,7 @@ public class DAOTest extends TestCase{
 	public void testCercleDAO() {
 		
 		try {
-			CercleDAO<Cercle> c1 = new CercleDAO();
+			DAO<Cercle> c1 = new CercleDAO();
 			Cercle f1 = new Cercle("c1", new Point(5, 5), 5);
 			System.out.println("************* CERCLE *************");
 			c1.create(f1);
