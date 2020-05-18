@@ -142,6 +142,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 			for (Forme forme : formes) {
 				String table = forme.getClass().getSimpleName();
 				if(table.equalsIgnoreCase("Carre")) {
+					String nom = forme.getNom();
 					PreparedStatement prep = connect.prepareStatement("UPDATE Carre"
 							+ " SET HGx = ? , HGy = ? , cote = ?"
 							+ " WHERE nom = ?");
@@ -149,19 +150,21 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 					prep.setInt(1, ((Carre) forme).getPoint().getX());
 					prep.setInt(2, ((Carre) forme).getPoint().getY());
 					prep.setDouble(3, ((Carre)forme).getCote());
-					prep.setString(4, ((Carre)forme).getNom());
+					prep.setString(4, nom);
 					prep.executeUpdate();
 				} else if(table.equalsIgnoreCase("Cercle")) {
+					String nom = forme.getNom();
 					PreparedStatement prep = connect.prepareStatement("UPDATE Cercle"
 							+ " SET centrex = ? , centrey = ? , rayon = ?"
 							+ " WHERE nom = ?");
 					prep.setInt(1, ((Cercle) forme).getPoint().getX());
 					prep.setInt(2, ((Cercle) forme).getPoint().getY());
 					prep.setDouble(3, ((Cercle) forme).getRayon());
-					prep.setString(4, ((Cercle) forme).getNom());
+					prep.setString(4, nom);
 					prep.executeUpdate();
 
 				} else if(table.equalsIgnoreCase("Rectangle")) {
+					String nom = forme.getNom();
 					PreparedStatement prep = connect.prepareStatement("UPDATE Rectangle"
 							+ " SET HGx = ? , HGy = ? , largeur = ? , longeur = ? "
 							+ " WHERE nom = ?");
@@ -169,12 +172,10 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 					prep.setInt(2, ((Rectangle) forme).getPoint().getY());
 					prep.setDouble(3, ((Rectangle) forme).getLongeur());
 					prep.setDouble(4, ((Rectangle) forme).getLargeur());
-					prep.setString(5, ((Rectangle) forme).getNom());
+					prep.setString(5, nom);
 					prep.executeUpdate();
 				} else if(table.equalsIgnoreCase("Triangle")) {
 					String nom = forme.getNom();
-					System.out.println("tri : nom => "+nom+ "   ");
-					forme.afficher();
 					PreparedStatement prep = connect.prepareStatement("UPDATE Triangle"
 							+ " SET p1x = ? , p1y = ? , p2x = ? , p2y = ? , p3x = ? , p3y = ? "
 							+ " WHERE nom = ?");
@@ -186,19 +187,6 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 					prep.setInt(6, ((Triangle) forme).getPoint3().getY());
 					prep.setString(7, nom);
 					int res = prep.executeUpdate();
-					System.out.println("res ==> "+ res);
-					//assert res == 1;
-					
-					 prep = connect.prepareStatement("SELECT * FROM Triangle"
-							+ " WHERE nom = ?");
-					prep.setString(1, nom);
-					ResultSet resu = prep.executeQuery();
-					if(!resu.next()) System.out.println("r");
-					else System.out.println("r2");
-						System.out.println(" je vérifie  \t nom :"+ resu.getString("nom")+ "  ("+resu.getInt("p1x")+","+resu.getInt("p1y")+")");
-					
-					
-					
 					
 				} 
 			}
@@ -211,7 +199,7 @@ public class GroupeFormeDAO extends DAO<GroupeForme>{
 
 
 
-		} catch (SQLException | EstListeVide e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return obj;

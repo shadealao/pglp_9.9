@@ -1,20 +1,20 @@
 package fr.uvsq21506437.logicielDessin;
 
+import java.sql.SQLException;
+
 import Exception.EstListeVide;
 import Exception.NomVide;
 import composite.GroupeForme;
 import junit.framework.TestCase;
-
 /**
- * Unit test for simple App.
+ * Test GroupeForme
+ * @author user
+ *
  */
 public class GroupeFormeTest extends TestCase {
-    /**
-     * 
-     * @throws NomVide regarde si le nom de la forme a bien été noté
-     * @throws EstListeVide regarde si la liste est vide
-     */
-    public void testGroupeForme() throws NomVide, EstListeVide {
+    public void testGroupeForme() {
+    	try {
+    	
     	Forme f1 = new Cercle("c1", new Point(5, 5), 5);
         Forme f2 = new Rectangle("r1", new Point(2, 1), 5, 10);
         Forme f3 = new Carre("car1", new Point(8, 2), 6);
@@ -38,12 +38,15 @@ public class GroupeFormeTest extends TestCase {
         grp2.afficher();
         grp2.deplacer(2, 4);
         grp2.afficher();
+    	} catch (NomVide | EstListeVide e) {
+			e.printStackTrace();
+		}
     }
 
     
 
     /**
-     * 
+     * j'affiche GroupeForme vide.
      */
     public void testEstListeVide(){
     	GroupeForme grp1;

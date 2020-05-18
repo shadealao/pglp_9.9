@@ -6,7 +6,13 @@ public class Cercle extends Forme{
 	private Point centre;
 	private final double rayon;
 	
-	
+	/**
+	 * 
+	 * @param nom nom objet
+	 * @param centre point au centre du cercle
+	 * @param rayon rayon du cercle
+	 * @throws NomVide objet sans nom
+	 */
 	public Cercle(String nom, Point centre, double rayon) throws NomVide{
 		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
@@ -14,10 +20,6 @@ public class Cercle extends Forme{
 		this.rayon = rayon;
 	}
 	
-	public Cercle() {
-		this.rayon = 0.0;
-	}
-
 	@Override
 	public void afficher() {
 		System.out.println(this.nom +" Cercle(centre="+centre.toString()+", rayon="+this.rayon+")");
@@ -29,9 +31,18 @@ public class Cercle extends Forme{
 		this.centre.setY(this.centre.getY()+ y);
 	}
 	
+	/**
+	 * 
+	 * @return point centre du cercle
+	 */
 	public Point getPoint() {
 		return this.centre;
 	}
+	
+	/**
+	 * 
+	 * @return rayon du cercle
+	 */
 	public double getRayon() {
 		return this.rayon;
 	}

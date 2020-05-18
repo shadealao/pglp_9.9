@@ -13,46 +13,62 @@ import Exception.EstListeVide;
 import Exception.NomVide;
 import composite.GroupeForme;
 import junit.framework.TestCase;
-
+/**
+ * test DAO.
+ * @author user
+ *
+ */
 public class DAOTest extends TestCase{
-	
-	public void testCercleDAO() throws SQLException, NomVide, EstListeVide {
-		DAO<Cercle> c1 = new CercleDAO();
-		Cercle f1 = new Cercle("c1", new Point(5, 5), 5);
-		System.out.println("************* CERCLE *************");
-		c1.create(f1);
-		System.out.println("Part1 - read");
-		Cercle res = c1.read(f1.getNom());
-		f1.afficher();
-		res.afficher();
+	public void testCercleDAO() {
 		
-		System.out.println("Part2 - update");
-		f1.deplacer(2, 7);
-		c1.update(f1);
-		res = c1.read(f1.getNom());
-		f1.afficher();
-		res.afficher();
+		try {
+			CercleDAO<Cercle> c1 = new CercleDAO();
+			Cercle f1 = new Cercle("c1", new Point(5, 5), 5);
+			System.out.println("************* CERCLE *************");
+			c1.create(f1);
+			System.out.println("Part1 - read");
+			Cercle res = c1.read(f1.getNom());
+			f1.afficher();
+			res.afficher();
+			
+			System.out.println("Part2 - update");
+			f1.deplacer(2, 7);
+			c1.update(f1);
+			res = c1.read(f1.getNom());
+			f1.afficher();
+			res.afficher();
+		} catch (SQLException | NomVide e) {
+			
+			e.printStackTrace();
+		}
+		
 	}
 
-	public void testCarreDAO() throws SQLException, NomVide, EstListeVide {
-		DAO<Carre> c1 = new CarreDAO();
-		Carre f1 = new Carre("c1", new Point(7, 5), 2.1);
-		System.out.println("************* CARRE *************");
-		c1.create(f1);
-		System.out.println("Part1 - read");
-		Carre res = c1.read(f1.getNom());
-		f1.afficher();
-		res.afficher();
+	public void testCarreDAO() {
+		try {
+			DAO<Carre> c1 = new CarreDAO();
+			Carre f1 = new Carre("c1", new Point(7, 5), 2.1);
+			System.out.println("************* CARRE *************");
+			c1.create(f1);
+			System.out.println("Part1 - read");
+			Carre res = c1.read(f1.getNom());
+			f1.afficher();
+			res.afficher();
+			
+			System.out.println("Part2 - update");
+			f1.deplacer(2, 7);
+			c1.update(f1);
+			res = c1.read(f1.getNom());
+			f1.afficher();
+			res.afficher();
+		} catch (SQLException | NomVide e) {
+			e.printStackTrace();
+		}
 		
-		System.out.println("Part2 - update");
-		f1.deplacer(2, 7);
-		c1.update(f1);
-		res = c1.read(f1.getNom());
-		f1.afficher();
-		res.afficher();
 	}
 	
-	public void testRectangleDAO() throws SQLException, NomVide, EstListeVide {
+	public void testRectangleDAO(){
+		try {
 		DAO<Rectangle> c1 = new RectangleDAO();
 		Rectangle f1 = new Rectangle("c1", new Point(2, 41), 2.1, 8);
 		
@@ -69,9 +85,13 @@ public class DAOTest extends TestCase{
 		res = c1.read(f1.getNom());
 		f1.afficher();
 		res.afficher();
+		} catch (SQLException | NomVide e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void testTriangleDAO() throws SQLException, NomVide, EstListeVide {
+	public void testTriangleDAO() {
+		try {
 		DAO<Triangle> c1 = new TriangleDAO();
 		Triangle f1 = new Triangle("c1", new Point(2, 1),new Point(4, 4), new Point(7, 10) );
 		
@@ -88,30 +108,13 @@ public class DAOTest extends TestCase{
 		Triangle res2 = c1.read(f1.getNom());
 		f1.afficher();
 		res2.afficher();
+		} catch (SQLException | NomVide e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void testGroupeFormeDAO() throws SQLException, NomVide, EstListeVide {
-		BDD db = new BDD();
-		db.connection();
-		db.DropTable("GroupeForme");
-		db.DropTable("Carre");
-		db.DropTable("Rectangle");
-		db.DropTable("Triangle");
-		db.DropTable("Cercle");
-		
-		
-		db.creationTableCercle();
-		db.creationTableCarre();
-		db.creationTableRectangle();
-		db.creationTableTriangle();
-		db.creationTableGroupeForme();
-		
-		db.AfficheTable("Cercle");
-		db.AfficheTable("Carre");
-		db.AfficheTable("Rectangle");
-		db.AfficheTable("Triangle");
-		db.AfficheTable("GroupeForme");
-		
+	public void testGroupeFormeDAO()  {
+		try {
 		DAO<GroupeForme> c1 = new GroupeFormeDAO();
 		DAO<Rectangle> R = new RectangleDAO();
 		DAO<Carre> C = new CarreDAO();
@@ -124,8 +127,6 @@ public class DAOTest extends TestCase{
         Rectangle f2 = new Rectangle("r1", new Point(2, 1), 5, 10);
         Carre f3 = new Carre("car1", new Point(8, 2), 6);
         Triangle f4 = new Triangle("tri1", new Point(4, 2), new Point(6, 3), new Point(5, 4));
-//        grp1.remove(f1);
-//		grp1 = c1.update(grp1);
 		
         grp1.add(f1);
         grp1.add(f2);
@@ -173,6 +174,8 @@ public class DAOTest extends TestCase{
 		System.out.println("\t ---");
 		res4.afficher();
 		
-		
+		} catch (SQLException | NomVide | EstListeVide e) {
+			e.printStackTrace();
+		}
 	}
 }

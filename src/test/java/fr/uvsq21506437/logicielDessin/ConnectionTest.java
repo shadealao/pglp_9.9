@@ -4,21 +4,21 @@ import java.sql.SQLException;
 
 import DAO.BDD;
 import junit.framework.TestCase;
-
 /**
- * Unit test for simple App.
+ * test connexion BDD.
+ * @author user
+ *
  */
 public class ConnectionTest extends TestCase {
 
 	/**
-	 * Rigourous Test :-)
-	 * 
-	 * @throws SQLException
+	 * test création tables BDD
+	 * @throws SQLException exception SQL
 	 */
 	public void testApp() throws SQLException {
 		BDD db = new BDD();
 		db.connection();
-/*
+
 		db.DropTable("GroupeForme");
 		db.DropTable("Carre");
 		db.DropTable("Rectangle");
@@ -30,17 +30,14 @@ public class ConnectionTest extends TestCase {
 		db.creationTableRectangle();
 		db.creationTableTriangle();
 		db.creationTableGroupeForme();
-*/
+		
+		
 		db.AfficheTable("Cercle");
 		db.AfficheTable("Carre");
 		db.AfficheTable("Rectangle");
 		db.AfficheTable("Triangle");
 		db.AfficheTable("GroupeForme");
 
-		/*
-		 * db.DropTable("GroupeForme"); db.creationTableGroupeForme();
-		 * db.AfficheTable("GroupeForme");
-		 */
-		// db.creationclass();
+		
 	}
 }

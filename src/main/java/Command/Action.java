@@ -346,42 +346,70 @@ public class Action {
 		int k = 0;
 		int l = 0;
 		boolean trouve = false;
+		boolean trouve2 = false;
 		ArrayList<Forme> GForme = dessin.getList();
-		for(int i = 0; i<GForme.size(); i++) {
-			if(GForme.get(i).getNom().equals(nom)) {
-				k = i;
-				trouve = true;
-			}
-		}
+		
 
 
 		try {
-			if(GForme.get(k).getClass().getSimpleName().equals("GroupeForme") &&(trouve == true)) {
+			for(int i = 0; i<GForme.size(); i++) {
+				System.out.println("liste ==> "+ GForme.get(i).getNom());
+				if(GForme.get(i).getNom().equals(nom)) {
+					k = i;
+					trouve = true;
+					if(GForme.get(k).getClass().getSimpleName().equals("GroupeForme") &&(trouve == true)) {
+						
+						ArrayList<Forme> formes = ((GroupeForme) GForme.get(k)).getList();
+						for(int j = 0; j<formes.size(); j++) {
+							if(formes.get(j).getNom().equals(nomobjet)) {
+								l = j;
+								
+								trouve2 = true;
+								System.out.println("je supprime ici==> "+formes.get(j).getNom()+ " et \t"+GForme.get(i).getNom());
+							}
+						}
+						if(trouve2 == true) { 
+							for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()*/) {
+								forme.afficher();
+							}
+							
+							/*
+							formes.remove(l);
+							((GroupeForme) GForme.get(k)).setList(formes);
+							c.update(((GroupeForme) GForme.get(k)));
+							System.out.println("ici");
+							for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()/) {
+								forme.afficher();
+							}
+							*/
+						//	c.update(((GroupeForme) GForme.get(k)));
+							
+						}
+						
+					}
+				}
+			}
+			if(trouve2 == true) {
+				System.out.println("derniere vérif ==> "+ GForme.get(k).getNom());
+				GForme.remove(k);
 				GroupeFormeDAO c = new GroupeFormeDAO();
-				ArrayList<Forme> formes = ((GroupeForme) GForme.get(k)).getList();
-				trouve = false;
-				for(int i = 0; i<formes.size(); i++) {
-					if(formes.get(i).getNom().equals(nomobjet)) {
-						l = i;
-						trouve = true;
-					}
+				//dessin.clear();
+				//dessin.setList(GForme);
+				//c.update(GForme.);
+				for(int i = 0; i<GForme.size(); i++) {
+					System.out.println("liste ==> "+ GForme.get(i).getNom());
+					//c.update((GroupeForme)GForme);
 				}
-				if(trouve == true) { 
-					for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()*/) {
-						forme.afficher();
-					}
-					formes.remove(l);
-					((GroupeForme) GForme.get(k)).setList(formes);
-					c.update(((GroupeForme) GForme.get(k)));
-					System.out.println("ici");
-					for (Forme forme : formes/*((GroupeForme) GForme.get(k)).getList()*/) {
-						forme.afficher();
-					}
-				//	c.update(((GroupeForme) GForme.get(k)));
-					
+				for (Forme forme : GForme) {
+					//c.update((GroupeForme) forme);
 				}
+				dessin.setList(GForme);
+				
+					dessin.afficher();
+					//System.out.println("liste ==> "+ dessin..get(i).getNom());
 				
 			}
+			
 		} catch (SQLException | EstListeVide e) {
 			e.printStackTrace();
 		}

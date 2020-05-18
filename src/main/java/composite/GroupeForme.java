@@ -7,6 +7,10 @@ import fr.uvsq21506437.logicielDessin.Forme;
 
 public class GroupeForme extends Forme{
 	protected ArrayList<Forme> formes;
+	/**
+	 * Constructeur groupe de formes
+	 * @param nom nom de l'objet
+	 */
 	public GroupeForme(String nom) {
 		this.nom = nom;
 		formes = new ArrayList<Forme>();
@@ -41,10 +45,6 @@ public class GroupeForme extends Forme{
 	public void clear() {
 		this.formes.clear();
 	}
-	
-	/*public String getNom() {
-		return this.nom;
-	}*/
 
 	public ArrayList<Forme> getList() {
 		return formes;

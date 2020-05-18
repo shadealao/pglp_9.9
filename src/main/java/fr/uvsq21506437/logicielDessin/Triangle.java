@@ -7,6 +7,14 @@ public class Triangle extends Forme{
 	private Point p2;
 	private Point p3;
 	
+	/**
+	 * 
+	 * @param nom nom objet
+	 * @param p1 point1 du triangle 
+	 * @param p2 point2 du triangle 
+	 * @param p3 point3 du triangle 
+	 * @throws NomVide objet sans nom
+	 */
 	public Triangle(String nom, Point p1, Point p2, Point p3)  throws NomVide{
 		if(nom.equals("")) throw new NomVide();
 		this.nom = nom;
